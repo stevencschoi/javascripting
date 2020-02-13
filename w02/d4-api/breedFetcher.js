@@ -1,17 +1,22 @@
 const request = require('request');
-const fs = require('fs');
+// const fs = require('fs');
+const query = process.argv[2];
 
-const url = 'https://api.thecatapi.com/v1/breeds/search?q=sib';
-
-// print body to the terminal
+const url = 'https://api.thecatapi.com/v1/breeds/';
 
 // const catFetcher = (url, (error, response, body) => {
 const catFetcher = (url, query) => {
   request(url, (error, response, body) => {
     const data = JSON.parse(body);
-    console.log(data);
+    const values = Object.values(data);
+
+    for (const value of values) {
+      if (value.name === query) {
+        console.log(value);
+      }
+    }
   });
 };
 
-catFetcher(url);
+catFetcher(url, query);
 
